@@ -1,13 +1,13 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { HttpClient, HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-employeelist',
   standalone: true,
-  imports: [CommonModule, RouterModule, HttpClientModule, FormsModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   templateUrl: './employeelist.html',
 })
 export class Employeelist implements OnInit {
@@ -25,10 +25,12 @@ export class Employeelist implements OnInit {
 
   loading = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private cdr: ChangeDetectorRef // <-- ref
+  ) {}
 
   ngOnInit(): void {
-    // init โหลดทันที
     this.getEmployees();
   }
 
@@ -46,12 +48,18 @@ export class Employeelist implements OnInit {
         this.employees = res?.data || [];
         this.total = res?.total || 0;
         this.totalPage = Math.max(1, Math.ceil(this.total / this.limit));
+        this.loading = false;
+
+        this.cdr.detectChanges();
       },
       error: (err) => {
         console.error(err);
         this.employees = [];
         this.total = 0;
         this.totalPage = 1;
+        this.loading = false;
+
+        this.cdr.detectChanges();
       },
       complete: () => {
         this.loading = false;
@@ -59,7 +67,6 @@ export class Employeelist implements OnInit {
     });
   }
 
-  // user search
   search(): void {
     this.page = 1;
     this.getEmployees();

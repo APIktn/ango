@@ -1,59 +1,61 @@
 <div class="max-w-lg mx-auto mt-12 p-6 bg-white shadow rounded">
 
-  <h2 class="text-2xl font-bold mb-6">
+  <h2 class="text-2xl font-bold mb-6 text-center">
     {{ isEdit ? 'update employee' : 'add employee' }}
   </h2>
 
-  <form [formGroup]="form" class="grid gap-3">
+  <form [formGroup]="form" class="grid gap-4">
 
     <input
-      class="border p-2 rounded"
+      class="border p-2 rounded w-full"
       placeholder="first name"
       formControlName="emFirstName"
     />
 
     <input
-      class="border p-2 rounded"
+      class="border p-2 rounded w-full"
       placeholder="last name"
       formControlName="emLastName"
     />
 
     <input
-      class="border p-2 rounded"
+      class="border p-2 rounded w-full"
       placeholder="department"
       formControlName="emDept"
     />
 
     <input
-      class="border p-2 rounded"
+      class="border p-2 rounded w-full"
       placeholder="position"
       formControlName="emPos"
     />
 
     <input
       type="number"
-      class="border p-2 rounded"
+      class="border p-2 rounded w-full"
       placeholder="salary"
       formControlName="emSalary"
     />
 
-    <div class="flex gap-2 mt-6">
+    <!-- buttons -->
+    <div class="flex gap-2 mt-6 justify-center">
       <button
         type="button"
-        class="bg-blue-600 text-white px-4 py-2 rounded"
+        class="bg-blue-600 text-white px-6 py-2 rounded"
         (click)="submit()"
       >
         {{ isEdit ? 'update' : 'save' }}
       </button>
 
-      <button
-        *ngIf="isEdit"
-        type="button"
-        class="bg-red-600 text-white px-4 py-2 rounded"
-        (click)="delete()"
-      >
-        delete
-      </button>
+      @if (isEdit) {
+        <button
+          type="button"
+          class="bg-red-600 text-white px-6 py-2 rounded"
+          (click)="delete()"
+        >
+          delete
+        </button>
+      }
     </div>
 
   </form>

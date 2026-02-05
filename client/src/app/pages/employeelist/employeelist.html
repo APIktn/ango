@@ -22,12 +22,10 @@
 
   <!-- list -->
   <ul class="bg-white shadow rounded divide-y">
-
-    @for (emp of employees; track emp.id) {
+    @for (emp of employees; track emp.em_code) {
       <li
         class="p-4 hover:bg-gray-50 cursor-pointer"
-        [routerLink]="['/employee']"
-        [queryParams]="{ emcode: emp.em_code }"
+        [routerLink]="['/employee', emp.em_code]"
       >
         <p class="font-semibold">
           {{ emp.em_first_name }} {{ emp.em_last_name }}
@@ -43,14 +41,13 @@
         no data
       </li>
     }
-
   </ul>
 
-  <!-- pagination -->
   <div class="flex justify-between items-center mt-4">
     <button
+      type="button"
       (click)="prevPage()"
-      [disabled]="page === 1 || loading"
+      [disabled]="page === 1"
       class="px-4 py-2 border rounded disabled:opacity-50">
       prev
     </button>
@@ -60,8 +57,9 @@
     </span>
 
     <button
+      type="button"
       (click)="nextPage()"
-      [disabled]="loading || page >= totalPage"
+      [disabled]="page >= totalPage"
       class="px-4 py-2 border rounded disabled:opacity-50">
       next
     </button>

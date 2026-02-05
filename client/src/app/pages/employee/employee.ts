@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ReactiveFormsModule, FormBuilder, FormGroup } from '@angular/forms';
+import { FormBuilder, FormGroup, ReactiveFormsModule } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HttpClient, HttpClientModule } from '@angular/common/http';
 
@@ -14,11 +14,11 @@ export class EmployeeComponent implements OnInit {
 
   form!: FormGroup;
 
-  isEdit: boolean = false;
-  emCode: string = '';
-  loading: boolean = false;
+  isEdit = false;
+  emCode = '';
+  loading = false;
 
-  apiUrl: string = 'http://localhost:8080';
+  apiUrl = 'http://localhost:8080';
 
   constructor(
     private fb: FormBuilder,
@@ -29,7 +29,7 @@ export class EmployeeComponent implements OnInit {
 
   ngOnInit(): void {
 
-    // ===== create form =====
+    // create form
     this.form = this.fb.group({
       emFirstName: [''],
       emLastName: [''],
@@ -38,15 +38,15 @@ export class EmployeeComponent implements OnInit {
       emSalary: [null],
     });
 
-    // ===== mode by param =====
-    this.route.queryParams.subscribe(params => {
-      const code = params['emcode'];
+    // detect mode from route
+    this.route.paramMap.subscribe(params => {
+      const code = params.get('emCode');
 
       this.form.reset();
       this.loading = false;
 
       if (code) {
-        // update mode
+        // edit mode
         this.isEdit = true;
         this.emCode = code;
         this.getEmployeeByCode(code);
@@ -73,7 +73,6 @@ export class EmployeeComponent implements OnInit {
             emPos:       res.em_pos,
             emSalary:    res.em_salary,
           });
-
           this.loading = false;
         },
         error: () => {
@@ -82,7 +81,7 @@ export class EmployeeComponent implements OnInit {
       });
   }
 
-  // ===== submit =====
+  // ===== SUBMIT =====
   submit(): void {
 
     const payload = {
@@ -93,28 +92,20 @@ export class EmployeeComponent implements OnInit {
       em_salary:     this.form.value.emSalary,
     };
 
-    // ===== UPDATE =====
+    // update
     if (this.isEdit) {
       this.http
         .put(`${this.apiUrl}/employee?emcode=${this.emCode}`, payload)
-        .subscribe(() => {
-        });
+        .subscribe(() => {});
 
-    // ===== CREATE =====
+    // create
     } else {
       this.http
         .post<any>(`${this.apiUrl}/employee`, payload)
         .subscribe(res => {
-
-          this.isEdit = true;
-          this.emCode = res.em_code;
-
           this.router.navigate(
-            ['/employee'],
-            {
-              queryParams: { emcode: res.em_code },
-              replaceUrl: true
-            }
+            ['/employee', res.em_code],
+            { replaceUrl: true }
           );
         });
     }
@@ -127,7 +118,7 @@ export class EmployeeComponent implements OnInit {
     this.http
       .delete(`${this.apiUrl}/employee?emcode=${this.emCode}`)
       .subscribe(() => {
-        this.router.navigate(['/employee']);
+        this.router.navigate(['/employeelist']);
       });
   }
 }
