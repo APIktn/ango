@@ -23,3 +23,16 @@ DB_USER=root
 DB_PASS=
 DB_NAME=ktnapiango
 DB_PORT=3306
+
+-- ktnapiango.tbl_mas_employee definition
+
+CREATE TABLE `tbl_mas_employee` (
+  `Id` int(150) NOT NULL AUTO_INCREMENT,
+  `EmCode` varchar(255) NOT NULL,
+  `EmFirstName` varchar(255) NOT NULL,
+  `EmLastName` varchar(255) NOT NULL,
+  `EmDept` varchar(255) NOT NULL,
+  `EmPos` varchar(255) NOT NULL,
+  `EmSalary` int(150) NOT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=utf8;
