@@ -3,14 +3,17 @@ tech stack
 ///////////////////////////////////
 client
 npm start
-
+http://localhost:4200/
 ng generate component pages/employee --standalone
-ng generate component pages/employeelist --standalone
+npm install -D jasmine-core @types/jasmine karma karma-jasmine karma-chrome-launcher karma-coverage
+
 
 ///////////////////////////////////
 server
 go get github.com/joho/godotenv
+go get github.com/labstack/echo/v4
 go run .
+go clean -cache
 
 ///////////////////////////////////
 PORT=8080

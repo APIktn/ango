@@ -1,13 +1,70 @@
-<div class="max-w-md mx-auto mt-10">
-  <h2 class="text-xl font-bold mb-4">employee list</h2>
+<div class="max-w-lg mx-auto mt-10">
 
-  <ul class="bg-white shadow rounded">
-    <li
-      *ngFor="let emp of employees"
-      class="border-b p-3"
-    >
-      <p class="font-semibold">{{ emp.name }}</p>
-      <p class="text-sm text-gray-500">{{ emp.position }}</p>
-    </li>
+  <h2 class="text-2xl font-bold mb-4 text-center">
+    employee list
+  </h2>
+
+  <!-- search -->
+  <input
+    type="text"
+    [(ngModel)]="searchText"
+    (input)="search()"
+    placeholder="search employee..."
+    class="w-full mb-4 px-4 py-2 border rounded"
+  />
+
+  <!-- loading -->
+  @if (loading) {
+    <div class="text-center text-gray-500 mb-4">
+      loading...
+    </div>
+  }
+
+  <!-- list -->
+  <ul class="bg-white shadow rounded divide-y">
+
+    @for (emp of employees; track emp.id) {
+      <li
+        class="p-4 hover:bg-gray-50 cursor-pointer"
+        [routerLink]="['/employee']"
+        [queryParams]="{ emcode: emp.em_code }"
+      >
+        <p class="font-semibold">
+          {{ emp.em_first_name }} {{ emp.em_last_name }}
+        </p>
+        <p class="text-sm text-gray-500">
+          {{ emp.em_pos }} · {{ emp.em_dept }}
+        </p>
+      </li>
+    }
+
+    @if (!loading && employees.length === 0) {
+      <li class="p-4 text-center text-gray-400">
+        no data
+      </li>
+    }
+
   </ul>
+
+  <!-- pagination -->
+  <div class="flex justify-between items-center mt-4">
+    <button
+      (click)="prevPage()"
+      [disabled]="page === 1 || loading"
+      class="px-4 py-2 border rounded disabled:opacity-50">
+      prev
+    </button>
+
+    <span class="text-sm text-gray-600">
+      page {{ page }} / {{ totalPage }}
+    </span>
+
+    <button
+      (click)="nextPage()"
+      [disabled]="loading || page >= totalPage"
+      class="px-4 py-2 border rounded disabled:opacity-50">
+      next
+    </button>
+  </div>
+
 </div>
