@@ -1,0 +1,22 @@
+<div class="max-w-md mx-auto mt-10 p-6 bg-white shadow rounded">
+  <h2 class="text-xl font-bold mb-4">add employee</h2>
+
+  <input
+    class="w-full border p-2 mb-3"
+    placeholder="name"
+    [(ngModel)]="name"
+  />
+
+  <input
+    class="w-full border p-2 mb-3"
+    placeholder="position"
+    [(ngModel)]="position"
+  />
+
+  <button
+    class="bg-blue-500 text-white px-4 py-2 rounded"
+    (click)="submit()"
+  >
+    save
+  </button>
+</div>
