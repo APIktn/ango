@@ -30,7 +30,6 @@ export class EmployeeComponent implements OnInit {
     private http: HttpClient
   ) { }
 
-  tierLabel: string = '-';
   ngOnInit(): void {
 
     // form
