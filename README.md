@@ -5,6 +5,10 @@ client
 npm start
 http://localhost:4200/
 ng generate component pages/employee --standalone
+
+ng generate module ../module/status
+ng generate component ../module/status --standalone=false
+
 npm install -D jasmine-core @types/jasmine karma karma-jasmine karma-chrome-launcher karma-coverage
 
 

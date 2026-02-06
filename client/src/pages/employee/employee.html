@@ -1,8 +1,6 @@
 <div class="max-w-lg mx-auto mt-12 p-6 bg-white shadow rounded">
 
-  <h2 class="text-2xl font-bold mb-6 text-center">
-    {{ isEdit ? 'update employee' : 'add employee' }}
-  </h2>
+<app-status [isEdit]="isEdit"></app-status>
 
   <form [formGroup]="form" class="grid gap-4">
 
@@ -36,6 +34,11 @@
       placeholder="salary"
       formControlName="emSalary"
     />
+
+    <div>
+  {{ tierLabel }}
+</div>
+
 
     <!-- buttons -->
     <div class="flex gap-2 mt-6 justify-center">

@@ -16,18 +16,18 @@ export class Employeelist implements OnInit {
 
   employees: any[] = [];
 
-  searchText = '';
-  page = 1;
-  limit = 5;
+  searchText: string = '';
+  page: number = 1;
+  limit: number = 5;
 
-  total = 0;
-  totalPage = 1;
+  total: number = 0;
+  totalPage: number = 1;
 
-  loading = false;
+  loading: boolean = false;
 
   constructor(
     private http: HttpClient,
-    private cdr: ChangeDetectorRef // <-- ref
+    private cdr: ChangeDetectorRef
   ) {}
 
   ngOnInit(): void {
